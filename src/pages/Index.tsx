@@ -4,6 +4,10 @@ import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import Icon from '@/components/ui/icon';
 import { Progress } from '@/components/ui/progress';
+import RoadMap from '@/components/RoadMap';
+import MonitoringSection from '@/components/MonitoringSection';
+import PlanningSection from '@/components/PlanningSection';
+import AnalyticsSection from '@/components/AnalyticsSection';
 
 interface StatCard {
   title: string;
@@ -178,7 +182,15 @@ function Index() {
         <header className="bg-card border-b border-border px-8 py-6">
           <div className="flex items-center justify-between">
             <div>
-              <h2 className="text-3xl font-bold text-foreground">Дашборд мониторинга</h2>
+              <h2 className="text-3xl font-bold text-foreground">
+                {activeSection === 'dashboard' && 'Дашборд мониторинга'}
+                {activeSection === 'monitoring' && 'Мониторинг состояния дорог'}
+                {activeSection === 'planning' && 'Планирование ремонтов'}
+                {activeSection === 'analytics' && 'Аналитика и отчёты'}
+                {activeSection === 'control' && 'Контроль исполнения работ'}
+                {activeSection === 'routes' && 'Маршруты тестирования'}
+                {activeSection === 'settings' && 'Настройки системы'}
+              </h2>
               <p className="text-muted-foreground mt-1">Единая цифровая платформа городской дорожной инфраструктуры</p>
             </div>
             <div className="flex items-center gap-3">
@@ -195,6 +207,11 @@ function Index() {
         </header>
 
         <div className="p-8 space-y-8">
+          {activeSection === 'monitoring' && <MonitoringSection />}
+          {activeSection === 'planning' && <PlanningSection />}
+          {activeSection === 'analytics' && <AnalyticsSection />}
+          
+          {activeSection === 'dashboard' && (<>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {stats.map((stat, index) => (
               <Card key={index} className="hover:shadow-lg transition-shadow">
@@ -324,6 +341,9 @@ function Index() {
               </Card>
             </div>
           </div>
+          
+          <RoadMap />
+          </>)}
         </div>
       </main>
     </div>
